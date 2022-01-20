@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react'
 const axios = require('axios');
+const url = 'https://www.surveygyu.ml/'
+
 
 function Home() {
-  const user_get = async () => {
-    const rep = await axios.get('https://www.surveygyu.ml/')
+
+
+  const userGet = async () => {
+    const rep = await axios.get(url)
     console.log(rep.data.message)
   }
-  const user_post = async () => {
+  const userPost = async () => {
     const data = { title: 'hi' }
-    await axios.post("https://www.surveygyu.ml/user/create", data,)
+    await axios.post(url + "user/create", data,)
+  }
+  const userDelete = async (id) => {
+    await axios.delete(url + "delete/" + id,)
   }
   return (
     <div>
@@ -18,8 +25,9 @@ function Home() {
         <a className='title' href='http://localhost:3000/form/create'>go to make questions!</a>
       </div>
       <div>
-        <button onClick={e => user_get()}>get user</button>
-        <button onClick={e => user_post()}>plus user</button>
+        <button onClick={e => userGet()}>get user</button>
+        <button onClick={e => userPost()}>plus user</button>
+        <input onChange={e => userDelete(e.target.value)}></input>
       </div>
     </div >
   )
