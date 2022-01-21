@@ -1,7 +1,8 @@
 import '../../styles/Home.module.css'
 import React, { useState } from 'react'
 import { QuestionInterface } from '../../src/question'
-import { v4 as uuidv4 } from 'uuid'
+const axios = require('axios');
+const url = 'https://www.surveygyu.ml'
 
 function CreateForm() {
 
@@ -9,16 +10,19 @@ function CreateForm() {
 
     const [title, setTitle] = useState('');
 
-    let t = ''
+    const qPost = async () => {
+        const data = { questions: questions }
+        await axios.post(url + "/question/create", data,)
+    }
 
     const addQuestion = (title) => {
         const cp = [...questions]
         const qu = {
-            id: uuidv4(),
             qType: 'checkbox',
-            btn: true,
+            btn: false,
             options: [],
-            title: ''
+            title: '',
+            desc: ''
         }
         title === '' ? qu.title = 'default' : qu.title = title
         cp.push(qu)
@@ -45,7 +49,7 @@ function CreateForm() {
 
     const editDescription = (index, text) => {
         const cp = [...questions]
-        cp[index].description = text
+        cp[index].desc = text
         setQuestions(cp)
     }
 
@@ -57,7 +61,7 @@ function CreateForm() {
 
     const addOptionToQuestion = (index) => {
         const cp = [...questions]
-        cp[index].options.push({ title: "" })
+        cp[index].options.push({ desc: "" })
         setQuestions(cp);
     }
 
@@ -69,7 +73,7 @@ function CreateForm() {
 
     const editOptionToQuestion = (index, o_index, text) => {
         const cp = [...questions]
-        cp[index].options[o_index].title = text
+        cp[index].options[o_index].desc = text
         setQuestions(cp);
     }
 
@@ -81,7 +85,7 @@ function CreateForm() {
                 </div>
                 <div className='main-row'>
                     <button className='input-title' onClick={e => addQuestion(title) & setTitle('')}>add</button>
-                    <button className='input-title' onClick={e => setQuestions([])}>delete all questions</button>
+                    <button className='input-title' onClick={e => qPost() & setQuestions([])}>submit all questions</button>
                 </div>
             </div>
             <div className='main'>
@@ -91,8 +95,8 @@ function CreateForm() {
                             {q.btn === true ? q.title
                                 :
                                 <div className='questions'>
-                                    <input value={q.title} onChange={e => editTitle(index, e.target.value)}></input >
-                                    <select value={q.qType} onChange={e => editqType(index, e.target.value)}>
+                                    <input value={q.title} onChange={e => editTitle(index, e.target.value)} style={{ fontSize: 20 }}></input >
+                                    <select value={q.qType} onChange={e => editqType(index, e.target.value)} style={{ fontSize: 20 }}>
                                         <option value='checkbox'>checkbox</option>
                                         <option value='question'>question</option>
                                     </select>
@@ -100,12 +104,12 @@ function CreateForm() {
                                     {
                                         (q.qType === "checkbox") ?
                                             <>
-                                                <span>options</span>
+                                                <span style={{ fontSize: 18 }}>options</span>
                                                 <div style={{ paddingLeft: 20, }}>
                                                     {
                                                         q.options.map((option, o_index) => {
                                                             return <div>
-                                                                <input value={option.title} placeholder={'option' + (o_index + 1)} onChange={e => editOptionToQuestion(index, o_index, e.target.value)}></input>
+                                                                <input value={option.desc} placeholder={'option' + (o_index + 1)} onChange={e => editOptionToQuestion(index, o_index, e.target.value)}></input>
                                                                 <button onClick={e => delOptionToQuestion(index, o_index)}>delete option</button>
                                                             </div>
                                                         })
@@ -113,7 +117,7 @@ function CreateForm() {
                                                     <button onClick={e => addOptionToQuestion(index)} >add option</button>
                                                 </div></>
                                             :
-                                            <textarea placeholder='typing description' value={q.description} onChange={e => editDescription(index, e.target.value)}></textarea >
+                                            <textarea placeholder='typing description' value={q.desc} onChange={e => editDescription(index, e.target.value)}></textarea >
                                     }
                                     <br />
                                 </div>

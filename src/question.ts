@@ -1,12 +1,11 @@
 export interface QuestionInterface {
-    id: string;
     qType: string;
     title?: string;
-    description?: string;
+    desc: string;
     btn: boolean;
     options: Array<QuestionOptionInterface>;
 }
 
 export interface QuestionOptionInterface {
-    title: string;
+    desc: string;
 }
