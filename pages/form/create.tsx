@@ -76,6 +76,15 @@ function CreateForm() {
         cp[index].options[o_index].desc = text
         setQuestions(cp);
     }
+    const f1 = async () => {
+        await addQuestion(title);
+        setTitle('');
+    }
+
+    const f2 = async () => {
+        await qPost();
+        setQuestions([])
+    }
 
     return (
         <div className='main-row'>
@@ -84,8 +93,8 @@ function CreateForm() {
                     <input className='input' value={title} placeholder='input title' onChange={e => setTitle(e.target.value)}></input>
                 </div>
                 <div className='main-row'>
-                    <button className='input-title' onClick={e => addQuestion(title) & setTitle('')}>add</button>
-                    <button className='input-title' onClick={e => qPost() & setQuestions([])}>submit all questions</button>
+                    <button className='input-title' onClick={e => f1()}>add</button>
+                    <button className='input-title' onClick={e => f2()}>submit all questions</button>
                 </div>
             </div>
             <div className='main'>
