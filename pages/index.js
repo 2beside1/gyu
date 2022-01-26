@@ -22,7 +22,7 @@ function Home() {
       <br /><br /><br />
       <div className='main'>
         <span>Hi! This page is for practicing.</span>
-        <a className='title' href='http://localhost:3000/form/create'>go to make questions!</a>
+        <a className='title' href='https://gyu-2beside1.vercel.app/form/create'>go to make questions!</a>
       </div>
       <div>
         <button onClick={e => userGet()}>get user</button>
