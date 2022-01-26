@@ -100,7 +100,7 @@ function CreateForm() {
             <div className='main'>
                 {
                     questions.map((q, index) => {
-                        return <div>
+                        return <div key={index}>
                             {q.btn === true ? q.title
                                 :
                                 <div className='questions'>
@@ -117,7 +117,7 @@ function CreateForm() {
                                                 <div style={{ paddingLeft: 20, }}>
                                                     {
                                                         q.options.map((option, o_index) => {
-                                                            return <div>
+                                                            return <div key={index}>
                                                                 <input value={option.desc} placeholder={'option' + (o_index + 1)} onChange={e => editOptionToQuestion(index, o_index, e.target.value)}></input>
                                                                 <button onClick={e => delOptionToQuestion(index, o_index)}>delete option</button>
                                                             </div>
