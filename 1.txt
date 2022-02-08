@@ -1,0 +1,55 @@
+
+mysql -h dbgyu.c3sbviid0ufa.ap-northeast-2.rds.amazonaws.com -P 3306 -u admin -p
+16232804s
+use dbGyu
+describe Users;
+select * from Users;
+
+npx sequelize db:create
+
+npx sequelize model:generate --name Options --attributes desc:list
+npx sequelize db:migrate
+:undo
+
+npx sequelize seed:generate --name demo-course;
+npx sequelize db:seed:all;
+
+
+
+mkdir nodejs-tutorial /폴더 만들기
+git config --global user.name "2beside1"
+git config --global user.email "2beside1@gmail.com"
+
+
+ssh -i dbGyu.pem ubuntu@54.180.152.98 #ec2 접속
+cd nodejs-tutorial-git
+node app.js
+http://54.180.152.98:8000
+
+git pull https://github.com/2beside1/nodejs-tutorial-git.git
+ # --allow-unrelated-histories
+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
+pm2 save
+pm2 restart app
+
+
+git clone https://github.com/2beside1/nodejs-tutorial-git.git
+
+sudo apt install nginx
+sudo vi /etc/nginx/sites-available/default
+location / {
+    proxy_pass http://localhost:8000; 
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+}
+sudo service nginx restart
+
+
+fuser -k 20001/tcp
+
+링글 문서 수정 : 
+로드밸런서에서 리스너 아이디 옆에 주황 삼각형 뜸 (dns 이름으로 접속 안됨)
+이를 해결하기 위해 보안그룹에서 리스너에 해당하는 포트의 인바운드 추가
